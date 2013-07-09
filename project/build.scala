@@ -10,19 +10,21 @@ object build extends Build {
         scalaVersion := "2.10.2",
         scalacOptions ++= Seq(), // Seq("-Xlog-free-terms", "-unchecked", /*, "-Ymacro-debug"*/),
     		resolvers += "sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
-        libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-compiler" % _)
+        libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-compiler" % _),
+        libraryDependencies <+= (scalaVersion)("org.scala-lang" % "scala-reflect" % _)
 	)
 
-	lazy val root = Project(
-		id = "macrocosm",
-		base = file("."),
-		settings = sharedSettings,
-		dependencies = Seq(ground)
-	)
 
 	lazy val ground = Project(
 		id = "macrocosm-ground",
 		base = file("ground"),
 		settings = sharedSettings
 	)
+    
+    lazy val root = Project(
+        id = "macrocosm",
+        base = file("."),
+        settings = sharedSettings,
+        dependencies = Seq(ground)
+    )
 }
